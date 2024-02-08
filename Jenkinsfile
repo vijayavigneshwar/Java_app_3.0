@@ -73,6 +73,21 @@ pipeline{
                }
             }
         }
+         stage('Push Artifact to Jfrog'){
+         when { expression {  params.action == 'create' } }
+            steps{
+               script{
+                    def server = Artifactory.server 'Jfrogauto'
+                    def uploadSpec = """{
+                    "files": [{
+                       "pattern": "target/*.jar",
+                       "target": "example-repo-local/"
+                    }]
+                 }"""
+                 server.upload(uploadSpec) 
+               }
+            }
+        }
         stage('Docker Image Build'){
          when { expression {  params.action == 'create' } }
             steps{
