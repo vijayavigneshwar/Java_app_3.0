@@ -77,7 +77,7 @@ pipeline{
          when { expression {  params.action == 'create' } }
             steps{
                script{
-                    def server = Artifactory.server 'Jfrogauto'
+                    def server = Artifactory.server 'Jfrogserver'
                     def uploadSpec = """{
                     "files": [{
                        "pattern": "target/*.jar",
